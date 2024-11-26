@@ -1,1 +1,16 @@
-[{"id": "i", "name": "audi", "manufacturer": "belarus", "is_petrol": false, "tank_volume": "5.3"}]
+[
+  {
+    "id": 3,
+    "name": "4",
+    "manufacturer": "3",
+    "is_petrol": false,
+    "tank_volume": 1.0
+  },
+  {
+    "id": 1,
+    "name": "e",
+    "manufacturer": "r",
+    "is_petrol": true,
+    "tank_volume": 7.0
+  }
+]
