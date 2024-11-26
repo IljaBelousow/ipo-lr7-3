@@ -1,84 +1,119 @@
-import json
+import json 
 
-with open("file.json", "r", encoding="utf-8") as a:
-    file = json.load(a)
+with open("file.json", 'r', encoding='utf-8') as file: 
+    file = json.load(file) 
+dizel = True
+#Счетчик использований программы
+counter = 0 
 
-brik = 0
-while brik < 1:
-    print("""==================================
-1 - Вывести все записи
-2 - Вывести запись по ключу
-3 - Добавить запись
-4 - Удалить запись по ключу
-5 - Выйти из программы
-==================================""")
-    
-    user_input = int(input("Вы ввели: "))
-    print("==================================")
-#выводит все значения
-    if user_input == 1:
+
+while True:
+    print("""
+        1 - Вывести все записи 
+        2 - Вывести запись по полю 
+        3 - Добавить запись 
+        4 - Удалить запись по полю 
+        5 - Выйти из программы
+        """)
+
+
+    point = int(input("Введите действие: "))
+
+
+#Вывод всех записей
+    if point == 1:
         for i in file:
             print(f"""
-            ID: {i["id"]}, 
-            Имя: {i["name"]},                       
-            Facture: {i["manufacturer"]}, 
-            Benzin: {i["is_petrol"]},    
-            v3: {i["tank_volume"]}
+            Код: {i['id']}, 
+            Имя: {i['name']},                       
+            Фабрика: {i['manufacturer']}, 
+            Заправлена: {i['is_petrol']},    
+            Объем Бака: {i['tank_volume']} 
             """)
-#выводит значение по ключу
-    elif user_input == 2:
-        id_input = input("Введите ключ: ")
-        found = False
-        for i in file:
-            if id_input == i["id"]:  
-                print(f"""
-                ID: {i["id"]}, 
-                Имя: {i["name"]},                       
-                Facture: {i["manufacturer"]}, 
-                Benzin: {i["is_petrol"]},    
-                v3: {i["tank_volume"]}
-                """)
-                found = True
-                break
-        if not found:
-            print("Такой записи нет :(")
-#добавляет значение
-    elif user_input == 3:
-        add_input = input("Введите ключ для добавления: ")
-        found_2 = False
-        for i in file:
-            if i["id"] == add_input:
-                found_2 = True
-                print("Такой ключ уже есть")
-                break
-        else:
-            add_name_input = input("Введите название машины: ")
-            add_creator_input = input("Введите название производителя: ")
-            add_bool_input = input("Заправляется ли машина бензином (да/нет): ")
-            add_cub_input = input("Введите объём бака в литрах: ")
+        counter += 1
 
-            repository = {
-                "id": add_input,
-                "name": add_name_input,
-                "manufacturer": add_creator_input,
-                "is_petrol": True if add_bool_input == "да" else False,
-                "tank_volume": add_cub_input,   
+
+#Вывод по айди записи
+    elif point == 2:
+        idnum = int(input("Введите номер машины: "))
+        qwe = False  
+        index = 0  
+        for i in file:
+            if idnum == i['id']:
+                print(f"""
+                Код: {i['id']}, 
+                Имя: {i['name']},                       
+                Фабрика: {i['manufacturer']}, 
+                Заправлена: {i['is_petrol']},    
+                Объем Бака: {i['tank_volume']}
+                Индекс в списке: {index}
+                """)
+                qwe = True  
+                break  
+            index += 1
+        counter += 1
+        if not qwe:
+            print("Запись не найдена.")
+
+
+#Ввод с клавиатуры машины 
+    elif point == 3:
+        ids = int(input("Введите номер машины: "))
+        
+        errrror = False
+        for i in file:
+            if i['id'] == ids:
+                errrror = True
+                break
+        
+        if errrror:
+            print("Ошибка: машина с таким номером уже существует.")
+        else:
+            name = input("Введите имя машины: ")  
+            manufacturer = input("Введите завод изготовитель: ")  
+            is_petrol = input("бензин ? введите да/нет: ") 
+            tank_volume = float(input("Введите объем бака машины: "))  
+
+            new_i = {
+                'id': ids,
+                'name': name,
+                'manufacturer': manufacturer,
+                'is_petrol': True if is_petrol == 'да' else False, 
+                'tank_volume': tank_volume
             }
-            file.append(repository)
-            with open("file.json", "w", encoding="utf-8") as b:
-                json.dump(file, b)  
-#удаляет по ключу
-    elif user_input == 4:
-        del_input = int(input("Введите ключ для удаления: "))
-        found_3 = False
-        try:
-            for i in file:
-                if del_input == i["id"]:
-                    file.remove(i)
-            with open("file.json", "w", encoding="utf-8") as b:
-                json.dump(file, b)
-        except StopIteration:
-            print("Такой записи нет")
-#закрывает программу (цикл)
-    elif user_input == 5:
-        brik += 1
+
+            file.append(new_i) 
+            with open("file.json", 'w', encoding='utf-8') as output_file: 
+                json.dump(file, output_file, ensure_ascii=False, indent=2)
+            print("Машина успешно добавлена.")
+        counter += 1
+
+
+#Удаление машины
+    elif point == 4:
+        iddel = int(input("Введите номер машины: "))
+        qwe = False  
+
+        for i in file:
+            if iddel == i['id']:
+                file.remove(i)  
+                qwe = True  
+                break 
+
+        if not qwe:
+            print("Запись не найдена.")
+        else:
+            with open("file.json", 'w', encoding='utf-8') as output_file:
+                json.dump(file, output_file, ensure_ascii=False, indent=2)
+            print("Машина успешно удалена.")
+        counter += 1
+
+
+#Выход из программы
+    elif point == 5:
+        print(f"Программа завершена. ОНА МУЧИЛАСЬ РОВНО{counter} РАЗ !!!!!!!!!")
+        break  # Выход из цикла
+
+
+    else:
+        print("Некорректный ввод")
