@@ -1,16 +1,37 @@
 [
   {
-    "id": 3,
-    "name": "4",
+    "id": 1,
+    "name": "rty",
     "manufacturer": "3",
     "is_petrol": false,
     "tank_volume": 1.0
   },
   {
-    "id": 1,
+    "id": 2,
     "name": "e",
-    "manufacturer": "r",
+    "manufacturer": "bel",
     "is_petrol": true,
+    "tank_volume": 3.0
+  },
+  {
+    "id": 3,
+    "name": "zxc",
+    "manufacturer": "rub",
+    "is_petrol": true,
+    "tank_volume": 4.0
+  },
+  {
+    "id": 4,
+    "name": "qwe",
+    "manufacturer": "eng",
+    "is_petrol": false,
     "tank_volume": 7.0
-  }
+  },
+  {
+    "id": 5,
+    "name": "asd",
+    "manufacturer": "kris",
+    "is_petrol": true,
+    "tank_volume": 6.0
+  },
 ]
