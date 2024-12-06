@@ -3,9 +3,7 @@ import json
 with open("file.json", 'r', encoding='utf-8') as file: 
     file = json.load(file) 
 dizel = True
-#Счетчик использований программы
 counter = 0 
-
 
 while True:
     print("""
@@ -16,11 +14,13 @@ while True:
         5 - Выйти из программы
         """)
 
+    try:
+        point = int(input("Введите действие: "))
+    except ValueError:
+        print("Ошибка: Пожалуйста, введите число от 1 до 5.")
+        continue  
 
-    point = int(input("Введите действие: "))
-
-
-#Вывод всех записей
+    #Вывод всех записей
     if point == 1:
         for i in file:
             print(f"""
@@ -32,10 +32,14 @@ while True:
             """)
         counter += 1
 
-
-#Вывод по айди записи
+    #Вывод по айди записи
     elif point == 2:
-        idnum = int(input("Введите номер машины: "))
+        try:
+            idnum = int(input("Введите номер машины: "))
+        except ValueError:
+            print("Ошибка: Пожалуйста, введите корректный номер машины.")
+            continue
+
         qwe = False  
         index = 0  
         for i in file:
@@ -55,11 +59,14 @@ while True:
         if not qwe:
             print("Запись не найдена.")
 
-
-#Ввод с клавиатуры машины 
+    #Ввод с клавиатуры машины 
     elif point == 3:
-        ids = int(input("Введите номер машины: "))
-        
+        try:
+            ids = int(input("Введите номер машины: "))
+        except ValueError:
+            print("Ошибка: Пожалуйста, введите корректный номер машины.")
+            continue
+
         errrror = False
         for i in file:
             if i['id'] == ids:
@@ -72,13 +79,19 @@ while True:
             name = input("Введите имя машины: ")  
             manufacturer = input("Введите завод изготовитель: ")  
             is_petrol = input("бензин ? введите да/нет: ") 
-            tank_volume = float(input("Введите объем бака машины: "))  
+            tank_volume = input("Введите объем бака машины: ")  
+
+            try:
+                tank_volume = float(tank_volume)
+            except ValueError:
+                print("Ошибка: Пожалуйста, введите корректный объем бака.")
+                continue
 
             new_i = {
                 'id': ids,
                 'name': name,
                 'manufacturer': manufacturer,
-                'is_petrol': True if is_petrol == 'да' else False, 
+                'is_petrol': True if is_petrol.lower() == 'да' else False, 
                 'tank_volume': tank_volume
             }
 
@@ -88,10 +101,14 @@ while True:
             print("Машина успешно добавлена.")
         counter += 1
 
-
-#Удаление машины
+    #Удаление машины
     elif point == 4:
-        iddel = int(input("Введите номер машины: "))
+        try:
+            iddel = int(input("Введите номер машины: "))
+        except ValueError:
+            print("Ошибка: Пожалуйста, введите корректный номер машины.")
+            continue
+
         qwe = False  
 
         for i in file:
@@ -108,12 +125,10 @@ while True:
             print("Машина успешно удалена.")
         counter += 1
 
-
-#Выход из программы
+    # Выход из программы
     elif point == 5:
-        print(f"Программа завершена. ОНА МУЧИЛАСЬ РОВНО{counter} РАЗ !!!!!!!!!")
-        break  # Выход из цикла
-
+        print(f"Программа завершена. ОНА МУЧИЛАСЬ РОВНО {counter} РАЗ !!!!!!!!!")
+        break  
 
     else:
-        print("Некорректный ввод")
+        print("Некорректный ввод. Пожалуйста, введите число от 1 до 5.")
